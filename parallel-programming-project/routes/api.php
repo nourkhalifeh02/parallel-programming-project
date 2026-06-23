@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware(['throttle:60', 'benchmark'])->group(function () {
+Route::middleware(['throttle:6000', 'benchmark'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
 
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{product}', [ProductController::class, 'show']);
+    Route::get('/productsredis/{product}', [ProductController::class, 'showRedis']);
 
     Route::get('/cart', [CartController::class, 'index'])->middleware('auth:sanctum');
     Route::post('/cart', [CartController::class, 'store'])->middleware('auth:sanctum');
@@ -25,8 +26,12 @@ Route::middleware(['throttle:60', 'benchmark'])->group(function () {
 
     Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->middleware('auth:sanctum');
-    Route::post('/orders/cart', [OrderController::class, 'orderCart'])->middleware(['auth:sanctum', 'session.block']);
-    Route::post('/orders/product', [OrderController::class, 'orderProduct'])->middleware(['auth:sanctum', 'session.block']);
+    Route::post('/orders/cart', [OrderController::class, 'orderCart'])->middleware('auth:sanctum');
+    Route::post('/orders/cartredis', [OrderController::class, 'orderCart'])->middleware('auth:sanctum');
+    Route::post('/orders/cartseq', [OrderController::class, 'ordercartsequential'])->middleware('auth:sanctum');
+    Route::post('/orders/cartenh', [OrderController::class, 'ordercartenhanced'])->middleware('auth:sanctum');
+    Route::post('/orders/product', [OrderController::class, 'orderProduct'])->middleware('auth:sanctum');
+    Route::post('/orders/productredis', [OrderController::class, 'orderProduct'])->middleware('auth:sanctum');
 
     Route::get('/notifications', [NotificationController::class, 'index'])->middleware('auth:sanctum');
     Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->middleware('auth:sanctum');

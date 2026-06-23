@@ -14,7 +14,7 @@ class GenerateDailyReport implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public const BATCH_SIZE = 5000;
+    public const BATCH_SIZE = 10000;
 
     public ?string $date;
 

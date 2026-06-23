@@ -15,6 +15,8 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->integer('inventory')->default(0);
             $table->string('image')->nullable();
+            $table->integer('version')->unsigned()->default(0);
+            $table->integer('request_counter')->default(0);
             $table->timestamps();
         });
     }

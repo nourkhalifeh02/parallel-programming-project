@@ -41,11 +41,7 @@ class BenchmarkServiceProvider extends ServiceProvider
                 'name' => $event->job->resolveName(),
                 'job_class' => $event->job->resolveName(),
                 'cpu_time' => $totalTime,
-                'ram_usage' => $ramUsage,
                 'peak_ram_usage' => $peakRamUsage,
-                'connection_time' => 0,
-                'response_time' => $totalTime,
-                'total_time' => $totalTime,
             ]);
         });
     }

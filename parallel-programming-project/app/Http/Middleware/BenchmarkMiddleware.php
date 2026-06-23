@@ -31,11 +31,7 @@ class BenchmarkMiddleware
             'method' => $request->method(),
             'uri' => $request->fullUrl(),
             'cpu_time' => $totalTime,
-            'ram_usage' => $ramUsage,
             'peak_ram_usage' => $peakRamUsage,
-            'connection_time' => 0,
-            'response_time' => $totalTime,
-            'total_time' => $totalTime,
         ]);
 
         return $response;

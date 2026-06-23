@@ -16,11 +16,7 @@ return new class extends Migration
             $table->string('uri')->nullable();
             $table->string('job_class')->nullable();
             $table->decimal('cpu_time', 12, 4)->nullable();
-            $table->decimal('ram_usage', 12, 2)->nullable();
             $table->decimal('peak_ram_usage', 12, 2)->nullable();
-            $table->decimal('connection_time', 12, 4)->nullable();
-            $table->decimal('response_time', 12, 4)->nullable();
-            $table->decimal('total_time', 12, 4)->nullable();
             $table->timestamps();
         });
     }

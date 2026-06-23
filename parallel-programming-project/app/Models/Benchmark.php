@@ -13,10 +13,6 @@ class Benchmark extends Model
         'uri',
         'job_class',
         'cpu_time',
-        'ram_usage',
         'peak_ram_usage',
-        'connection_time',
-        'response_time',
-        'total_time',
     ];
 }

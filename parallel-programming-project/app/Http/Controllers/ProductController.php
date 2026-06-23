@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -12,9 +13,33 @@ class ProductController extends Controller
         return response()->json(Product::all());
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
+        $product = Product::findOrFail($id);
+        $product->request_counter += 1;
+        $product->save();
+
         return response()->json($product);
+    }
+
+    public function showRedis($id)
+    {
+        $cacheKey = 'product:'.$id;
+
+        $cachedProduct = Cache::get($cacheKey);
+        if ($cachedProduct !== null) {
+            Cache::put($cacheKey, $cachedProduct, now()->addMinutes(10));
+
+            return response()->json($cachedProduct);
+        }
+
+        $product = Product::findOrFail($id);
+        $product->request_counter += 1;
+        $product->save();
+        $productArray = $product->toArray();
+        Cache::put($cacheKey, $productArray, now()->addMinutes(10));
+
+        return response()->json($productArray);
     }
 
     public function store(Request $request)
